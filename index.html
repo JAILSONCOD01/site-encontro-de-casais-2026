@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Encontro de Casais — Equipe Azul 2025</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ─── RESET & TOKENS ─────────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep:    #060b18;
+  --bg-mid:     #0d1526;
+  --bg-card:    rgba(255,255,255,0.04);
+  --bg-card-hv: rgba(255,255,255,0.08);
+  --accent-a:   #38bdf8;
+  --accent-b:   #818cf8;
+  --accent-c:   #f472b6;
+  --glass:      rgba(255,255,255,0.06);
+  --glass-bd:   rgba(255,255,255,0.12);
+  --text-hi:    #f1f5f9;
+  --text-lo:    #94a3b8;
+  --radius-sm:  10px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+  --shadow-glow: 0 0 40px rgba(99,102,241,0.25);
+  --transition: .35s cubic-bezier(.4,0,.2,1);
+}
+
+/* ─── DARK MODE OVERRIDE ─────────────────────────────────────────── */
+body.light {
+  --bg-deep:    #f0f4ff;
+  --bg-mid:     #e2e8f7;
+  --bg-card:    rgba(0,0,0,0.04);
+  --bg-card-hv: rgba(0,0,0,0.08);
+  --glass:      rgba(255,255,255,0.7);
+  --glass-bd:   rgba(99,102,241,0.2);
+  --text-hi:    #0f172a;
+  --text-lo:    #475569;
+}
+
+/* ─── BASE ───────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-hi);
+  min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ──────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-a), var(--accent-b));
+  border-radius: 99px;
+}
+
+/* ─── HERO ───────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  height: 52vh;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    linear-gradient(to bottom, rgba(6,11,24,.15) 0%, rgba(6,11,24,.92) 100%),
+    url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400') center/cover no-repeat;
+}
+
+/* Animated gradient orbs */
+.hero::before,
+.hero::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: orb-drift 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.hero::before {
+  width: 420px; height: 420px;
+  top: -80px; left: -80px;
+  background: radial-gradient(circle, rgba(56,189,248,.35), transparent 70%);
+}
+.hero::after {
+  width: 360px; height: 360px;
+  bottom: -60px; right: -60px;
+  background: radial-gradient(circle, rgba(244,114,182,.3), transparent 70%);
+  animation-delay: -5s;
+}
+
+@keyframes orb-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(40px, 30px) scale(1.1); }
+}
+
+/* Floating particles canvas */
+#particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 28px 40px;
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+  animation: hero-fade-in .9s ease both;
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--accent-a);
+  background: rgba(56,189,248,.1);
+  border: 1px solid rgba(56,189,248,.25);
+  padding: 4px 14px;
+  border-radius: 99px;
+  margin-bottom: 14px;
+}
+
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  background: linear-gradient(100deg, var(--accent-a) 0%, var(--accent-b) 50%, var(--accent-c) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  font-size: 1.05rem;
+  margin-top: 10px;
+  color: rgba(241,245,249,.8);
+  font-style: italic;
+}
+
+/* ─── DARK MODE TOGGLE ───────────────────────────────────────────── */
+#darkModeToggle {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-b), var(--accent-a));
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.2rem;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(99,102,241,.45);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+#darkModeToggle:hover {
+  transform: scale(1.12) rotate(20deg);
+  box-shadow: 0 6px 28px rgba(99,102,241,.65);
+}
+
+/* ─── CONTAINER ──────────────────────────────────────────────────── */
+.container {
+  width: 92%;
+  max-width: 1240px;
+  margin: auto;
+  padding: 40px 0;
+}
+
+/* ─── SECTION TITLE ──────────────────────────────────────────────── */
+.section-title {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.section-title h1 {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  padding-bottom: 10px;
+}
+.section-title h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+}
+
+/* ─── FILTER BUTTONS ─────────────────────────────────────────────── */
+.filter-buttons {
+  overflow-x: auto;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  /* hide scrollbar but keep scroll */
+  scrollbar-width: none;
+}
+.filter-buttons::-webkit-scrollbar { display: none; }
+
+.filter-buttons ul {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  min-width: max-content;
+  padding: 4px 2px;
+}
+
+.filter-buttons li {
+  padding: 8px 20px;
+  border-radius: 99px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-bd);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--text-lo);
+  transition: all var(--transition);
+  user-select: none;
+}
+.filter-buttons li:hover {
+  background: var(--bg-card-hv);
+  color: var(--text-hi);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.2);
+}
+.filter-buttons li.active {
+  background: linear-gradient(135deg, var(--accent-b), var(--accent-a));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(99,102,241,.4);
+}
+
+/* ─── GALLERY GRID ───────────────────────────────────────────────── */
+.portfolio-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+@media (min-width: 640px)  { .portfolio-gallery { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .portfolio-gallery { grid-template-columns: repeat(4, 1fr); } }
+
+/* ─── CARD ───────────────────────────────────────────────────────── */
+.item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  animation: card-in .5s ease both;
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.5), 0 0 0 1px rgba(56,189,248,.25);
+  border-color: rgba(56,189,248,.3);
+}
+
+.item img,
+.item video {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  display: block;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+}
+.item:hover img,
+.item:hover video { transform: scale(1.08); }
+
+/* ── Thumb de vídeo no card ─────────────────────────────────────── */
+.item .video-thumb {
+  width: 100%;
+  height: 185px;
+  object-fit: cover;
+  display: block;
+  background: #0a1628;
+  /* começa invisível; JS define opacity:1 quando o frame estiver pronto */
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .4s ease;
+}
+.item:hover .video-thumb { transform: scale(1.08); }
+
+/* Ícone play centralizado sobre o thumb */
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(0,0,0,.52);
+  border: 2px solid rgba(255,255,255,.75);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
+  transition: background var(--transition), transform var(--transition);
+}
+.play-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: #fff;
+  margin-left: 3px; /* alinha visualmente o triângulo */
+}
+.item:hover .play-icon {
+  background: rgba(56,189,248,.55);
+  transform: translate(-50%, -50%) scale(1.12);
+}
+
+/* Type badge (📷 / 🎬) */
+.item-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 99px;
+  padding: 3px 10px;
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  color: #fff;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Couple name on hover overlay */
+.item-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6,11,24,.85) 0%, transparent 55%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  pointer-events: none;
+  z-index: 1;
+}
+.item:hover .item-overlay { opacity: 1; }
+.item-overlay span {
+  font-size: .75rem;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
+/* ─── MODAL ──────────────────────────────────────────────────────── */
+#modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;  /* inset não funciona em Safari antigo */
+  /* ocupa a tela real no iOS (dvh = dynamic viewport height) */
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  background: #000;                       /* preto puro — sem blur que quebra vídeo no WebKit */
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: stretch;
+  z-index: 9999;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+#modal.active { display: flex; }
+
+/* ── Área do conteúdo (foto ou vídeo) ocupa tudo exceto a barra de controles ── */
+#modal-wrapper {
+  position: relative;
+  flex: 1;                                /* ocupa todo o espaço disponível */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+#modalContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── FOTO: ocupa tela toda, nítida ──────────────────────────────── */
+#modalContent img {
+  display: block;
+  /* object-fit contain: exibe a imagem inteira sem cortar */
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  /* sem border-radius no mobile para usar toda a área */
+  border-radius: 0;
+  /* nitidez em retina — Safari suporta auto */
+  image-rendering: auto;
+  -ms-interpolation-mode: bicubic;
+}
+
+/* ── VÍDEO: ocupa tela toda, proporção preservada ───────────────── */
+#modalContent video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;                    /* não corta — exibe o vídeo inteiro */
+  background: #000;
+  border-radius: 0;
+  /* CRÍTICO para iOS/Safari: sem transform, sem filter aqui */
+}
+
+/* ── Botão fechar — canto superior direito, flutuante sobre a mídia */
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  /* safe-area para iphone com notch */
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.55);
+  border: 1.5px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #fff;
+  z-index: 50;                    /* acima de tudo */
+  transition: background .2s, transform .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.modal-close:hover  { background: rgba(244,114,182,.55); transform: rotate(90deg) scale(1.1); }
+.modal-close:active { background: rgba(244,114,182,.75); }
+
+/* ── Barra inferior — apenas contador ───────────────────────────── */
+#modal-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  padding-bottom: max(10px, env(safe-area-inset-bottom));
+  background: rgba(0,0,0,.6);
+  z-index: 30;
+}
+
+/* Contador */
+#modal-counter {
+  font-size: .82rem;
+  color: rgba(255,255,255,.7);
+  white-space: nowrap;
+  letter-spacing: .05em;
+  user-select: none;
+  pointer-events: none;
+  text-align: center;
+}
+
+/* ── Setas de navegação — laterais, sobre a mídia ───────────────── */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,.45);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 50%;
+  font-size: 1.3rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 20;
+  -webkit-tap-highlight-color: transparent;
+  /* toque fácil no mobile */
+  min-width: 48px;
+  min-height: 48px;
+  transition: background .2s;
+}
+.nav:active { background: rgba(56,189,248,.45); }
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ─── DEPOIMENTOS ────────────────────────────────────────────────── */
+.depoimentos {
+  margin-top: 48px;
+  padding: 32px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-bd);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glow);
+}
+
+.depoimentos h1 {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dep {
+  padding: 20px 24px;
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  text-align: center;
+  font-size: .9rem;
+  line-height: 1.7;
+  color: var(--text-hi);
+  position: relative;
+  margin-bottom: 14px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.dep:last-child { margin-bottom: 0; }
+.dep:hover {
+  border-color: rgba(56,189,248,.25);
+  box-shadow: 0 4px 20px rgba(56,189,248,.08);
+}
+.dep::before {
+  content: '\201C';
+  position: absolute;
+  top: -8px;
+  left: 18px;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--accent-a);
+  opacity: .35;
+  font-family: Georgia, serif;
+}
+
+/* ─── FOOTER ─────────────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 60px;
+}
+
+.footer-name {
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--accent-a), var(--accent-b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-location {
+  font-size: .82rem;
+  color: var(--text-lo);
+  margin-top: 4px;
+  letter-spacing: .04em;
+}
+
+.whats {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff;
+  border-radius: 99px;
+  text-decoration: none;
+  font-size: .88rem;
+  font-weight: 600;
+  box-shadow: 0 4px 18px rgba(34,197,94,.35);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.whats:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(34,197,94,.5);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .hero { height: 38vh; min-height: 260px; }
+  .hero h1 { font-size: 1.6rem; }
+  .hero p  { font-size: .9rem; }
+  .hero-content { padding: 20px 22px; }
+  .item img, .item video { height: 145px; }
+  .depoimentos { padding: 20px 16px; }
+
+  /* Setas menores no mobile */
+  .nav { width: 40px; height: 40px; font-size: 1rem; }
+  .prev { left: 6px; }
+  .next { right: 6px; }
+}
+
+/* ─── HERO CAROUSEL ──────────────────────────────────────────────── */
+.hero-carousel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s cubic-bezier(.4,0,.2,1);
+}
+.carousel-slide.active { opacity: 1; }
+
+/* dim layer over each slide */
+.carousel-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(6,11,24,.25) 0%, rgba(6,11,24,.88) 100%);
+}
+
+/* Dot indicators */
+.carousel-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+.c-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.c-dot.active {
+  background: var(--accent-a);
+  transform: scale(1.35);
+  border-color: var(--accent-a);
+}
+
+/* Arrow buttons */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 5;
+  transition: background var(--transition), transform var(--transition);
+}
+.carousel-btn:hover {
+  background: rgba(56,189,248,.3);
+  transform: translateY(-50%) scale(1.1);
+}
+.carousel-btn.c-prev { left: 14px; }
+.carousel-btn.c-next { right: 14px; }
+
+/* ─── UTILITY: FADE ANIMATION DELAY ─────────────────────────────── */
+.item:nth-child(1)  { animation-delay: .03s; }
+.item:nth-child(2)  { animation-delay: .06s; }
+.item:nth-child(3)  { animation-delay: .09s; }
+.item:nth-child(4)  { animation-delay: .12s; }
+.item:nth-child(5)  { animation-delay: .15s; }
+.item:nth-child(6)  { animation-delay: .18s; }
+.item:nth-child(7)  { animation-delay: .21s; }
+.item:nth-child(8)  { animation-delay: .24s; }
+.item:nth-child(9)  { animation-delay: .27s; }
+.item:nth-child(10) { animation-delay: .30s; }
+.item:nth-child(11) { animation-delay: .33s; }
+.item:nth-child(12) { animation-delay: .36s; }
+</style>
+</head>
+
+<body>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════ -->
+<div class="hero">
+
+  <!-- ── Carousel de 5 slides ──────────────────────────────────── -->
+  <div class="hero-carousel" id="heroCarousel">
+
+    <!-- SLIDE 1 — casal romântico (Unsplash) -->
+    <div class="carousel-slide active"
+         style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400')">
+    </div>
+
+    <!-- SLIDE 2 — mãos juntas -->
+    <div class="carousel-slide"
+         style="background-image:url('https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?q=80&w=1400')">
+    </div>
+
+    <!-- SLIDE 3 — casal ao pôr do sol -->
+    <div class="carousel-slide"
+         style="background-image:url('https://images.unsplash.com/photo-1529634597503-139d3726fed5?q=80&w=1400')">
+    </div>
+
+    <!-- SLIDE 4 — noivos dançando -->
+    <div class="carousel-slide"
+         style="background-image:url('https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=1400')">
+    </div>
+
+    <!-- SLIDE 5 — abraço ao entardecer -->
+    <div class="carousel-slide"
+         style="background-image:url('https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=1400')">
+    </div>
+
+    <!-- Setas de navegação -->
+    <button class="carousel-btn c-prev" id="cPrev" aria-label="Slide anterior">❮</button>
+    <button class="carousel-btn c-next" id="cNext" aria-label="Próximo slide">❯</button>
+
+    <!-- Indicadores (dots) -->
+    <div class="carousel-dots" id="carouselDots">
+      <span class="c-dot active" data-idx="0"></span>
+      <span class="c-dot"       data-idx="1"></span>
+      <span class="c-dot"       data-idx="2"></span>
+      <span class="c-dot"       data-idx="3"></span>
+      <span class="c-dot"       data-idx="4"></span>
+    </div>
+  </div><!-- /hero-carousel -->
+
+  <canvas id="particles"></canvas>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Equipe Azul · 2025 / 2026</span>
+    <h1>Encontro de Casais</h1>
+    <p>Unindo histórias, criando memórias ❤️</p>
+  </div>
+</div>
+
+<!-- ═══ DARK MODE TOGGLE ══════════════════════════════════════════ -->
+<button id="darkModeToggle" title="Alternar tema">🌙</button>
+
+<!-- ═══ PORTFOLIO ═════════════════════════════════════════════════ -->
+<section class="portfolio">
+<div class="container">
+
+  <div class="section-title">
+    <h1>Equipe Azul 2025 / 2026</h1>
+  </div>
+
+  <div class="filter-buttons">
+    <ul id="filter-btns">
+      <li class="active" data-target="all">Todos</li>
+      <li data-target="Lilson e Lígia">Lilson &amp; Lígia</li>
+      <li data-target="Marcelo e Rosângela">Marcelo &amp; Rosângela</li>
+      <li data-target="Josias e Ozília">Josias &amp; Ozília</li>
+      <li data-target="Neemias e Ivanete">Neemias &amp; Ivanete</li>
+      <li data-target="Tarcísio e Lorraine">Tarcísio &amp; Lorraine</li>
+      <li data-target="Roberto e Lara">Roberto &amp; Lara</li>
+      <li data-target="Jailson e Valéria">Jailson &amp; Valéria</li>
+      <li data-target="Bruno e Débora">Bruno &amp; Débora</li>
+      <li data-target="Davi e Miriã">Davi &amp; Miriã</li>
+      <li data-target="Ivanildo e Elizete">Ivanildo &amp; Elizete</li>
+      <li data-target="Thiago e Jamylle">Thiago &amp; Jamylle</li>
+    </ul>
+  </div>
+
+  <div class="portfolio-gallery" id="gallery">
+
+    <div class="item" data-type="img" data-id="Lilson e Lígia" data-src="portfolio/1LL.jpeg">
+      <img src="portfolio/1LL.jpeg" alt="Lilson e Lígia">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Lilson &amp; Lígia</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Lilson e Lígia" data-src="portfolio/2LL.jpeg">
+      <img src="portfolio/2LL.jpeg" alt="Lilson e Lígia">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Lilson &amp; Lígia</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Lilson e Lígia" data-src="portfolio/3LL.mp4">
+      <img class="video-thumb" src="" alt="Lilson e Lígia" data-video="portfolio/3LL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Lilson &amp; Lígia</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/4MR.mp4">
+      <img class="video-thumb" src="" alt="Marcelo e Rosângela" data-video="portfolio/4MR.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Marcelo &amp; Rosângela</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/5MR.mp4">
+      <img class="video-thumb" src="" alt="Marcelo e Rosângela" data-video="portfolio/5MR.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Marcelo &amp; Rosângela</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/6MR.mp4">
+      <img class="video-thumb" src="" alt="Marcelo e Rosângela" data-video="portfolio/6MR.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Marcelo &amp; Rosângela</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/6NI.mp4">
+      <img class="video-thumb" src="" alt="Neemias e Ivanete" data-video="portfolio/6NI.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/7NI.jpeg">
+      <img src="portfolio/7NI.jpeg" alt="Neemias e Ivanete">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/8NI.mp4">
+      <img class="video-thumb" src="" alt="Neemias e Ivanete" data-video="portfolio/8NI.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/9NI.jpeg">
+      <img src="portfolio/9NI.jpeg" alt="Neemias e Ivanete">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/10NI.mp4">
+      <img class="video-thumb" src="" alt="Neemias e Ivanete" data-video="portfolio/10NI.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/12NI.jpeg">
+      <img src="portfolio/12NI.jpeg" alt="Neemias e Ivanete">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/13NI.jpeg">
+      <img src="portfolio/13NI.jpeg" alt="Neemias e Ivanete">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Neemias &amp; Ivanete</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/14JO.mp4">
+      <img class="video-thumb" src="" alt="Josias e Ozília" data-video="portfolio/14JO.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/15JO.mp4">
+      <img class="video-thumb" src="" alt="Josias e Ozília" data-video="portfolio/15JO.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/16JO.mp4">
+      <img class="video-thumb" src="" alt="Josias e Ozília" data-video="portfolio/16JO.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/17JO.jpeg">
+      <img src="portfolio/17JO.jpeg" alt="Josias e Ozília">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/18JO.jpeg">
+      <img src="portfolio/18JO.jpeg" alt="Josias e Ozília">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/19JO.jpeg">
+      <img src="portfolio/19JO.jpeg" alt="Josias e Ozília">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/20JO.jpeg">
+      <img src="portfolio/20JO.jpeg" alt="Josias e Ozília">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Josias &amp; Ozília</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Tarcísio e Lorraine" data-src="portfolio/21TL.jpeg">
+      <img src="portfolio/21TL.jpeg" alt="Tarcísio e Lorraine">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/22TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/22TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/23TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/23TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/24TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/24TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/25TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/25TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/26TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/26TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/27TL.mp4">
+      <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/27TL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/28RL.jpeg">
+      <img src="portfolio/28RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/29RL.jpeg">
+      <img src="portfolio/29RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/30RL.jpeg">
+      <img src="portfolio/30RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/31RL.jpeg">
+      <img src="portfolio/31RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/32RL.jpeg">
+      <img src="portfolio/32RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/33RL.jpeg">
+      <img src="portfolio/33RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/34RL.jpeg">
+      <img src="portfolio/34RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/35RL.jpeg">
+      <img src="portfolio/35RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Roberto e Lara" data-src="portfolio/36RL.mp4">
+      <img class="video-thumb" src="" alt="Roberto e Lara" data-video="portfolio/36RL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Roberto e Lara" data-src="portfolio/37RL.mp4">
+      <img class="video-thumb" src="" alt="Roberto e Lara" data-video="portfolio/37RL.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/38JV.jpeg">
+      <img src="portfolio/38JV.jpeg" alt="Jailson e Valéria">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Jailson &amp; Valéria</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/39JV.jpeg">
+      <img src="portfolio/39JV.jpeg" alt="Jailson e Valéria">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Jailson &amp; Valéria</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Jailson e Valéria" data-src="portfolio/40JV.mp4">
+      <img class="video-thumb" src="" alt="Jailson e Valéria" data-video="portfolio/40JV.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Jailson &amp; Valéria</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/41JV.jpeg">
+      <img src="portfolio/41JV.jpeg" alt="Jailson e Valéria">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Jailson &amp; Valéria</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/42BD.jpeg">
+      <img src="portfolio/42BD.jpeg" alt="Bruno e Débora">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Bruno &amp; Débora</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/43BD.jpeg">
+      <img src="portfolio/43BD.jpeg" alt="Bruno e Débora">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Bruno &amp; Débora</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/44BD.jpeg">
+      <img src="portfolio/44BD.jpeg" alt="Bruno e Débora">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Bruno &amp; Débora</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/45BD.jpeg">
+      <img src="portfolio/45BD.jpeg" alt="Bruno e Débora">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Bruno &amp; Débora</span></div>
+    </div>
+
+  </div><!-- /gallery -->
+</div>
+</section>
+
+<!-- ═══ DEPOIMENTOS ═══════════════════════════════════════════════ -->
+<section class="container">
+  <div class="depoimentos">
+
+    <h1>Depoimentos</h1>
+
+    <div class="dep">
+      "Obrigada Bruno e Débora pela recepção de ontem! Foi uma noite deliciosa — na companhia de vocês e todos os casais. Nem se fala a comida e o clima acolhedor, fizeram tudo ser especial. Nós nos sentimos realmente em casa."
+      <br><br><strong>— Valéria &amp; Jailson · 29/04/2026</strong>
+    </div>
+
+    <div class="dep">
+      "Nós que agradecemos pela presença de todos! Foi um prazer recebê-los em nossa casa e nosso encontro foi uma benção assim como todos! Uma pena que está acabando 🥲 mas que possamos continuar nos encontrando de vez em quando mesmo quando acabar!"
+      <br><br><strong>— Débora &amp; Bruno · 29/04/2026</strong>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ MODAL ══════════════════════════════════════════════════════ -->
+<div id="modal">
+
+  <!-- botão fechar: canto superior direito, sobre a mídia -->
+  <button class="modal-close" id="closeModal" aria-label="Fechar">✕</button>
+
+  <!-- área principal: mídia + setas laterais -->
+  <div id="modal-wrapper">
+    <button class="nav prev" id="modalPrev" aria-label="Anterior">❮</button>
+    <div id="modalContent"></div>
+    <button class="nav next" id="modalNext" aria-label="Próximo">❯</button>
+  </div>
+
+  <!-- barra inferior: contador -->
+  <div id="modal-bar">
+    <span id="modal-counter"></span>
+  </div>
+
+</div>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-name">Jailson Web Developer 🚀</div>
+  <div class="footer-location">Barra de São Francisco — ES</div>
+  <a href="https://wa.me/55279995787497" target="_blank" class="whats">
+    📱 Falar no WhatsApp
+  </a>
+</footer>
+
+<!-- ═══ SCRIPTS ═══════════════════════════════════════════════════ -->
+<script>
+/* ── Particles ─────────────────────────────────────────────────── */
+(function () {
+  const canvas = document.getElementById('particles');
+  const ctx    = canvas.getContext('2d');
+  let W, H, dots = [];
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+
+  function init() {
+    dots = Array.from({ length: 55 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.6 + .4,
+      dx: (Math.random() - .5) * .4,
+      dy: (Math.random() - .5) * .4,
+      a: Math.random() * .5 + .2,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    dots.forEach(d => {
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(56,189,248,${d.a})`;
+      ctx.fill();
+      d.x += d.dx;
+      d.y += d.dy;
+      if (d.x < 0 || d.x > W) d.dx *= -1;
+      if (d.y < 0 || d.y > H) d.dy *= -1;
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize(); init(); draw();
+})();
+
+/* ── Gallery & Modal ───────────────────────────────────────────── */
+(function () {
+  /* ── Referências ──────────────────────────────────────────────── */
+  var gallery      = document.querySelectorAll('.item');
+  var modal        = document.getElementById('modal');
+  var modalContent = document.getElementById('modalContent');
+  var modalCounter = document.getElementById('modal-counter');
+  var mPrev        = document.getElementById('modalPrev');   /* nomes únicos: mPrev / mNext */
+  var mNext        = document.getElementById('modalNext');
+  var mClose       = document.getElementById('closeModal');
+
+  var currentIdx   = 0;
+  var filtered     = [];
+
+  /* ── Mata vídeo sem deixar som residual ───────────────────────── */
+  function killVid() {
+    var v = modalContent.querySelector('video');
+    if (!v) return;
+    v.pause();
+    v.removeAttribute('src');
+    try { v.load(); } catch(e) {}
+    v.remove();
+  }
+
+  /* ── Exibe foto ou vídeo ──────────────────────────────────────── */
+  function show(idx) {
+    killVid();
+    modalContent.innerHTML = '';
+
+    var el  = filtered[idx];
+    var src = el.dataset.src;
+
+    if (el.dataset.type === 'video') {
+      /*
+       * iOS/Safari: para vídeo COM SOM tocar automaticamente ao abrir,
+       * o usuário precisa ter interagido com a página (clique no card já
+       * conta como interação). Por isso NÃO usamos muted — queremos som.
+       * playsinline impede que o iPhone abra o player nativo fullscreen.
+       */
+      var v = document.createElement('video');
+      v.src         = src;
+      v.controls    = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.setAttribute('webkit-playsinline', '');
+      v.preload     = 'auto';
+      v.autoplay    = true;
+      v.muted       = false;   /* COM SOM */
+      modalContent.appendChild(v);
+
+      /* O clique no card é interação válida → play com som funciona */
+      v.play().catch(function () {
+        /* Se o browser bloquear mesmo assim (modo baixo consumo iOS),
+           o usuário verá os controles e poderá dar play manualmente */
+      });
+
+    } else {
+      var img     = document.createElement('img');
+      img.src     = src;
+      img.alt     = (el.querySelector('img') || {}).alt || '';
+      img.loading = 'eager';
+      modalContent.appendChild(img);
+    }
+
+    /* Contador "3 / 7" */
+    modalCounter.textContent = (idx + 1) + ' / ' + filtered.length;
+
+    /* Esconde setas se só tiver 1 item */
+    var solo = filtered.length <= 1;
+    mPrev.style.visibility = solo ? 'hidden' : 'visible';
+    mNext.style.visibility = solo ? 'hidden' : 'visible';
+  }
+
+  /* ── Abre modal ao clicar num card ───────────────────────────── */
+  gallery.forEach(function (el) {
+    el.addEventListener('click', function () {
+      var cat = el.dataset.id;
+      filtered = Array.from(gallery).filter(function (i) {
+        return i.offsetParent !== null && i.dataset.id === cat;
+      });
+      currentIdx = filtered.indexOf(el);
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      show(currentIdx);
+    });
+  });
+
+  /* ── Navegação pelas setas ────────────────────────────────────── */
+  mNext.addEventListener('click', function () {
+    currentIdx = (currentIdx + 1) % filtered.length;
+    show(currentIdx);
+  });
+  mPrev.addEventListener('click', function () {
+    currentIdx = (currentIdx - 1 + filtered.length) % filtered.length;
+    show(currentIdx);
+  });
+
+  /* ── Fecha modal ─────────────────────────────────────────────── */
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    killVid();
+    modalContent.innerHTML = '';
+    modalCounter.textContent = '';
+  }
+
+  mClose.addEventListener('click', closeModal);
+
+  /* Teclado (desktop) */
+  document.addEventListener('keydown', function (e) {
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape')     closeModal();
+    if (e.key === 'ArrowRight') mNext.click();
+    if (e.key === 'ArrowLeft')  mPrev.click();
+  });
+
+  /* ── Swipe horizontal para mobile ────────────────────────────── */
+  var sx = 0, sy = 0;
+  modal.addEventListener('touchstart', function (e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+  }, { passive: true });
+  modal.addEventListener('touchend', function (e) {
+    if (!modal.classList.contains('active')) return;
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 45) {
+      if (dx < 0) mNext.click();
+      else        mPrev.click();
+    }
+  }, { passive: true });
+
+})(); /* fim IIFE modal */
+
+/* ── Filter ────────────────────────────────────────────────────── */
+document.querySelectorAll('#filter-btns li').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#filter-btns li').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const target = btn.dataset.target;
+    document.querySelectorAll('.item').forEach(item => {
+      item.style.display = (target === 'all' || item.dataset.id === target) ? 'block' : 'none';
+    });
+  });
+});
+
+/* ── Dark / Light toggle ───────────────────────────────────────── */
+const toggle = document.getElementById('darkModeToggle');
+toggle.addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  toggle.textContent = document.body.classList.contains('light') ? '🌑' : '🌙';
+});
+
+/* ── Hero Carousel ─────────────────────────────────────────────── */
+(function () {
+  var cSlides   = document.querySelectorAll('.carousel-slide');
+  var cDots     = document.querySelectorAll('.c-dot');
+  var cBtnPrev  = document.getElementById('cPrev');
+  var cBtnNext  = document.getElementById('cNext');
+  var cTotal    = cSlides.length;
+  var cCurrent  = 0;
+  var cTimer    = null;
+  var cInterval = 5000;
+
+  function cGoTo(idx) {
+    cSlides[cCurrent].classList.remove('active');
+    cDots[cCurrent].classList.remove('active');
+    cCurrent = (idx + cTotal) % cTotal;
+    cSlides[cCurrent].classList.add('active');
+    cDots[cCurrent].classList.add('active');
+  }
+
+  function cNext() { cGoTo(cCurrent + 1); }
+  function cPrevFn() { cGoTo(cCurrent - 1); }
+
+  function cStart() {
+    clearInterval(cTimer);
+    cTimer = setInterval(cNext, cInterval);
+  }
+
+  cBtnNext.addEventListener('click', function () { cNext();   cStart(); });
+  cBtnPrev.addEventListener('click', function () { cPrevFn(); cStart(); });
+
+  cDots.forEach(function (dot) {
+    dot.addEventListener('click', function () {
+      cGoTo(parseInt(dot.dataset.idx, 10));
+      cStart();
+    });
+  });
+
+  var heroEl = document.querySelector('.hero');
+  heroEl.addEventListener('mouseenter', function () { clearInterval(cTimer); });
+  heroEl.addEventListener('mouseleave', cStart);
+
+  cStart();
+})();
+
+/* ── Thumbnails dos cards de vídeo ─────────────────────────────── */
+/*
+ * Estratégia em 2 camadas:
+ * 1. Captura o 1º frame via <video> + Canvas → imagem real do vídeo
+ * 2. Se o browser bloquear (iOS segurança / codec), mostra um
+ *    gradiente bonito com ícone de play — nunca fica tela preta
+ *
+ * Os vídeos são carregados em fila (1 por vez) para não travar a rede.
+ */
+(function () {
+  var thumbs = Array.from(document.querySelectorAll('.video-thumb'));
+  if (!thumbs.length) return;
+
+  /* Gradiente de fallback: fundo escuro degradê com tom azul */
+  function makeFallback(imgEl) {
+    var canvas  = document.createElement('canvas');
+    canvas.width  = 320;
+    canvas.height = 185;
+    var ctx = canvas.getContext('2d');
+    /* gradiente diagonal escuro → azul petróleo */
+    var g = ctx.createLinearGradient(0, 0, 320, 185);
+    g.addColorStop(0,   '#0d1526');
+    g.addColorStop(0.5, '#0f2540');
+    g.addColorStop(1,   '#091a34');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, 320, 185);
+    /* ícone de play desenhado no canvas */
+    ctx.beginPath();
+    ctx.arc(160, 92, 34, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(150, 74);
+    ctx.lineTo(150, 110);
+    ctx.lineTo(180, 92);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,0.8)';
+    ctx.fill();
+    imgEl.src = canvas.toDataURL('image/jpeg', 0.7);
+    imgEl.style.opacity = '1';
+  }
+
+  /* Captura o primeiro frame real do vídeo */
+  function captureFrame(imgEl, src, done) {
+    var v    = document.createElement('video');
+    var done = done || function(){};
+    var fired = false;
+
+    function finish(ok) {
+      if (fired) return;
+      fired = true;
+      v.pause();
+      v.removeAttribute('src');
+      try { v.load(); } catch(e) {}
+      done(ok);
+    }
+
+    v.muted        = true;
+    v.preload      = 'metadata';
+    v.playsInline  = true;
+    v.setAttribute('playsinline', '');
+
+    /* #t=0.5 força o browser a saltar para 0.5s → frame visível */
+    v.src = src + '#t=0.5';
+
+    v.addEventListener('seeked', function () {
+      try {
+        var c  = document.createElement('canvas');
+        c.width  = v.videoWidth  || 320;
+        c.height = v.videoHeight || 185;
+        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+        var dataUrl = c.toDataURL('image/jpeg', 0.82);
+        imgEl.src = dataUrl;
+        imgEl.style.opacity = '1';
+        finish(true);
+      } catch (err) {
+        /* canvas taint / codec não suportado */
+        makeFallback(imgEl);
+        finish(false);
+      }
+    });
+
+    v.addEventListener('error', function () {
+      makeFallback(imgEl);
+      finish(false);
+    });
+
+    /* Timeout de segurança: 6s sem resposta → fallback */
+    var guard = setTimeout(function () {
+      makeFallback(imgEl);
+      finish(false);
+    }, 6000);
+
+    v.addEventListener('seeked',  function () { clearTimeout(guard); }, { once: true });
+    v.addEventListener('error',   function () { clearTimeout(guard); }, { once: true });
+
+    v.load();
+  }
+
+  /* Processa em fila, 1 vídeo por vez, para não sobrecarregar mobile */
+  var queue = thumbs.slice();
+
+  function processNext() {
+    if (!queue.length) return;
+    var imgEl = queue.shift();
+    var src   = imgEl.dataset.video;
+    if (!src) { processNext(); return; }
+
+    /* Mostra fallback imediatamente (nunca fica preto) */
+    makeFallback(imgEl);
+
+    /* Tenta capturar o frame real em background */
+    captureFrame(imgEl, src, function () {
+      /* pequena pausa entre capturas para não travar CPU mobile */
+      setTimeout(processNext, 80);
+    });
+  }
+
+  /* Começa após a página carregar */
+  if (document.readyState === 'complete') {
+    processNext();
+  } else {
+    window.addEventListener('load', processNext);
+  }
+})();
+</script>
+
+</body>
+</html>

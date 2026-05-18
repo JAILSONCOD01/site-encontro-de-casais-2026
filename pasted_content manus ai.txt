@@ -1,0 +1,597 @@
+<!DOCTYPE html>      
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Encontro de Casais - Equipe Azul 2025</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f172a,#020617);
+  color:#fff;
+  transition:.3s;
+}
+
+/* DARK MODE */
+body.dark{background:#f1f5f9;color:#111;}
+body.dark .item{background:#fff;}
+body.dark .dep,body.dark .depoimentos{background:#fff;color:#000;}
+body.dark .filter-buttons li{background:#ddd;color:#000;}
+body.dark footer{color:#000}
+
+/* HERO PREMIUM */
+.hero{
+  height:40vh;
+  background:
+  linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(2,6,23,0.9)),
+  url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1400') center/cover no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+}
+
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at top, rgba(99,102,241,0.3), transparent 60%);
+}
+
+.hero-content{
+  position:relative;
+  text-align:center;
+  backdrop-filter:blur(6px);
+  padding:20px 30px;
+  border-radius:12px;
+}
+
+.hero h1{
+  font-size:2.6rem;
+  font-weight:700;
+  background:linear-gradient(90deg,#38bdf8,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  font-size:1.2rem;
+  margin-top:8px;
+  opacity:.95;
+}
+
+/* CONTAINER */
+.container{
+  width:92%;
+  max-width:1200px;
+  margin:auto;
+  padding:30px 0;
+}
+
+/* TITULO */
+.section-title h1{
+  text-align:center;
+  font-size:1.6rem;
+  margin-bottom:15px;
+  background:linear-gradient(90deg,#38bdf8,#6366f1);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* BOTÃO DARK */
+#darkModeToggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:linear-gradient(45deg,#6366f1,#38bdf8);
+  border:none;
+  padding:10px 14px;
+  border-radius:50px;
+  cursor:pointer;
+  color:#fff;
+  z-index:999;
+}
+
+/* FILTROS */
+.filter-buttons{
+  overflow-x:auto;
+  margin-bottom:25px;
+  padding-bottom:8px;
+}
+.filter-buttons ul{
+  display:flex;
+  gap:10px;
+  list-style:none;
+  min-width:max-content;
+}
+.filter-buttons li{
+  padding:8px 16px;
+  border-radius:50px;
+  background:rgba(255,255,255,0.05);
+  cursor:pointer;
+  white-space:nowrap;
+  transition:.3s;
+}
+.filter-buttons li:hover{transform:scale(1.05);}
+.filter-buttons li.active{
+  background:linear-gradient(45deg,#6366f1,#38bdf8);
+}
+
+/* GRID */
+.portfolio-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+@media(min-width:700px){
+  .portfolio-gallery{grid-template-columns:repeat(3,1fr);}
+}
+@media(min-width:1000px){
+  .portfolio-gallery{grid-template-columns:repeat(4,1fr);}
+}
+
+/* CARD */
+.item{
+  border-radius:14px;
+  overflow:hidden;
+  position:relative;
+  cursor:pointer;
+  background:#000;
+}
+.item img,
+.item video{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  transition:.4s;
+}
+.item:hover img,
+.item:hover video{
+  transform:scale(1.08);
+}
+
+/* ❌ REMOVIDO TEXTO SOBRE IMAGEM */
+.item::after{
+  content:'';
+}
+
+/* MODAL PREMIUM */
+#modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.95);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:9999;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+
+#modal.active{
+  display:flex;
+  opacity:1;
+}
+
+#modalContent{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+#modalContent img,
+#modalContent video{
+  max-width:90%;
+  max-height:80vh;
+  border-radius:14px;
+}
+
+.modal-close{
+  position:absolute;
+  top:20px;
+  right:25px;
+  font-size:30px;
+  cursor:pointer;
+  color:#fff;
+}
+
+.nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:40px;
+  color:#fff;
+  cursor:pointer;
+  padding:10px;
+}
+.prev{left:20px;}
+.next{right:20px;}
+
+/* DEPOIMENTOS */
+.depoimentos h1{
+  font-size:1.2rem;
+  font-weight:bold; /* ✔ NEGRITO */
+  opacity:.8;
+}
+
+.depoimentos{
+  margin-top:40px;
+  background:rgba(255,255,255,0.05);
+  padding:20px;
+  border-radius:14px;
+}
+
+.dep{
+  padding:15px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.08);
+  text-align:center;
+}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:25px;
+  font-weight:600;
+}
+
+.whats{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-top:10px;
+  padding:10px 16px;
+  background:#25D366;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:14px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+  .hero{height:28vh}
+  .hero h1{font-size:1.6rem}
+  .hero p{font-size:1rem}
+  .item img,.item video{height:140px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <div class="hero-content">
+    <h1>Encontro de Casais</h1>
+    <p>Unindo histórias, criando memórias ❤️</p>
+  </div>
+</div>
+
+<button id="darkModeToggle">🌙</button>
+
+<section class="portfolio">
+<div class="container">
+
+<div class="section-title">
+<h1>Equipe Azul 2025 / 2026</h1>
+</div>
+
+<div class="filter-buttons">
+<ul id="filter-btns">
+<li class="active" data-target="all">Todos</li>
+<li data-target="Lilson e Lígia">Lilson & Lígia</li>
+<li data-target="Marcelo e Rosângela">Marcelo & Rosângela</li>
+<li data-target="Josias e Ozília">Josias & Ozília</li>
+<li data-target="Neemias e Ivanete">Neemias & Ivanete</li>
+<li data-target="Tarcísio e Lorraine">Tarcísio & Lorraine</li>
+<li data-target="Roberto e Lara">Roberto & Lara</li>
+<li data-target="Jailson e Valéria">Jailson & Valéria</li>
+<li data-target="Bruno e Débora">Bruno & Débora</li>
+<li data-target="Davi e Miriã">Davi & Miriã</li>
+<li data-target="Ivanildo e Elizete">Ivanildo & Elizete</li>
+<li data-target="Thiago e Jamylle">Thiago & Jamylle</li>
+</ul>
+</div>
+
+<div class="portfolio-gallery" id="gallery">
+
+<div class="item" data-type="img" data-id="Lilson e Lígia" data-src="portfolio/1LL.jpeg">
+<img src="portfolio/1LL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Lilson e Lígia" data-src="portfolio/2LL.jpeg">
+<img src="portfolio/2LL.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Lilson e Lígia" data-src="portfolio/3LL.mp4">
+<video src="portfolio/3LL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/4MR.mp4">
+<video src="portfolio/4MR.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/5MR.mp4">
+<video src="portfolio/5MR.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Marcelo e Rosângela" data-src="portfolio/6MR.mp4">
+<video src="portfolio/6MR.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/6NI.mp4">
+<video src="portfolio/6NI.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/7NI.jpeg">
+<img src="portfolio/7NI.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/8NI.mp4">
+<video src="portfolio/8NI.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/9NI.jpeg">
+<img src="portfolio/9NI.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Neemias e Ivanete" data-src="portfolio/10NI.mp4">
+<video src="portfolio/10NI.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/12NI.jpeg">
+<img src="portfolio/12NI.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Neemias e Ivanete" data-src="portfolio/13NI.jpeg">
+<img src="portfolio/13NI.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/14JO.mp4">
+<video src="portfolio/14JO.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/15JO.mp4">
+<video src="portfolio/15JO.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Josias e Ozília" data-src="portfolio/16JO.mp4">
+<video src="portfolio/16JO.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/17JO.jpeg">
+<img src="portfolio/17JO.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/18JO.jpeg">
+<img src="portfolio/18JO.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/19JO.jpeg">
+<img src="portfolio/19JO.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Josias e Ozília" data-src="portfolio/20JO.jpeg">
+<img src="portfolio/20JO.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Tarcísio e Lorraine" data-src="portfolio/21TL.jpeg">
+<img src="portfolio/21TL.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/22TL.mp4">
+<video src="portfolio/22TL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/23TL.mp4">
+<video src="portfolio/23TL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/24TL.mp4">
+<video src="portfolio/24TL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/25TL.mp4">
+<video src="portfolio/25TL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/26TL.mp4">
+<video src="portfolio/26TL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/27TL.mp4">
+<video src="portfolio/27TL.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/28RL.jpeg">
+<img src="portfolio/28RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/29RL.jpeg">
+<img src="portfolio/29RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/30RL.jpeg">
+<img src="portfolio/30RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/31RL.jpeg">
+<img src="portfolio/31RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/32RL.jpeg">
+<img src="portfolio/32RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/33RL.jpeg">
+<img src="portfolio/33RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/34RL.jpeg">
+<img src="portfolio/34RL.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/35RL.jpeg">
+<img src="portfolio/35RL.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Roberto e Lara" data-src="portfolio/36RL.mp4">
+<video src="portfolio/36RL.mp4"></video>
+</div>
+
+<div class="item" data-type="video" data-id="Roberto e Lara" data-src="portfolio/37RL.mp4">
+<video src="portfolio/37RL.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/38JV.jpeg">
+<img src="portfolio/38JV.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/39JV.jpeg">
+<img src="portfolio/39JV.jpeg">
+</div>
+
+<div class="item" data-type="video" data-id="Jailson e Valéria" data-src="portfolio/40JV.mp4">
+<video src="portfolio/40JV.mp4"></video>
+</div>
+
+<div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/41JV.jpeg">
+<img src="portfolio/41JV.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/42BD.jpeg">
+<img src="portfolio/42BD.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/43BD.jpeg">
+<img src="portfolio/43BD.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/44BD.jpeg">
+<img src="portfolio/44BD.jpeg">
+</div>
+
+<div class="item" data-type="img" data-id="Bruno e Débora" data-src="portfolio/45BD.jpeg">
+<img src="portfolio/45BD.jpeg">
+</div>
+
+
+</div>
+</div>
+</section>
+
+<section class="container">
+<div class="depoimentos">
+
+<h1 style="text-align:center;margin-bottom:20px;">Depoimentos</h1>
+
+<div class="dep">
+“Obrigada Bruno e Débora  pela recepção de ontem! Foi uma noite deliciosa — na companhia de vocês e todos os casais. Nem se fala a comida e o clima acolhedor, fizeram tudo ser especial. Nós nos sentimos realmente em casa.” — Valéria & Jailson 29/04/2026
+</div>
+
+<div class="dep">
+“Nós que agradecemos pela presença de todos! Foi um prazer recebê-los em nossa casa e nosso encontro foi uma benção assim como todos! Uma pena que está acabando 🥲 mas que possamos continuar nos encontrando de vez em quando mesmo quando acabar!” — Débora & Bruno 29/04/2026
+</div>
+
+
+</div>
+</section>
+
+<div id="modal">
+<span class="modal-close" id="closeModal">✖</span>
+<div class="nav prev">❮</div>
+<div id="modalContent"></div>
+<div class="nav next">❯</div>
+</div>
+
+<script>
+
+const items = document.querySelectorAll('.item');
+const modal = document.getElementById('modal');
+const modalContent = document.getElementById('modalContent');
+
+let currentIndex = 0;
+let filteredItems = [...items];
+
+function showItem(index){
+  const el = filteredItems[index];
+  modalContent.innerHTML = el.dataset.type === 'video'
+    ? `<video src="${el.dataset.src}" controls autoplay></video>`
+    : `<img src="${el.dataset.src}">`;
+}
+
+items.forEach((el)=>{
+  el.onclick=()=>{
+    const category = el.dataset.id;
+    filteredItems = [...items].filter(item => item.dataset.id === category);
+    currentIndex = filteredItems.indexOf(el);
+
+    modal.classList.add('active');
+    showItem(currentIndex);
+  }
+});
+
+document.querySelector('.next').onclick=()=>{
+  currentIndex = (currentIndex+1)%filteredItems.length;
+  showItem(currentIndex);
+};
+
+document.querySelector('.prev').onclick=()=>{
+  currentIndex = (currentIndex-1+filteredItems.length)%filteredItems.length;
+  showItem(currentIndex);
+};
+
+document.getElementById('closeModal').onclick=()=>{
+  modal.classList.remove('active');
+};
+
+modal.onclick=(e)=>{
+  if(e.target.id === 'modal'){
+    modal.classList.remove('active');
+  }
+};
+
+document.addEventListener('keydown',e=>{
+  if(e.key === 'Escape') modal.classList.remove('active');
+  if(e.key === 'ArrowRight') document.querySelector('.next').click();
+  if(e.key === 'ArrowLeft') document.querySelector('.prev').click();
+});
+
+document.querySelectorAll('#filter-btns li').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('#filter-btns li').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const target = btn.dataset.target;
+
+    document.querySelectorAll('.item').forEach(item=>{
+      item.style.display = (target==='all'||item.dataset.id===target)?'block':'none';
+    });
+  };
+});
+
+const toggle = document.getElementById('darkModeToggle');
+toggle.onclick=()=>{
+  document.body.classList.toggle('dark');
+};
+
+</script>
+
+<footer>
+<div>Jailson Web Developer 🚀</div>
+<div>Barra de São Francisco - ES</div>
+
+<a href="https://wa.me/55279995787497" target="_blank" class="whats">
+📱 Falar no WhatsApp
+</a>
+</footer>
+
+</body>
+</html>
