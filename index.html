@@ -160,6 +160,37 @@ body {
   font-style: italic;
 }
 
+/* ─── BACK TO TOP ────────────────────────────────────────────────── */
+#backToTop {
+  position: fixed;
+  bottom: 88px;
+  right: 28px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent-a), var(--accent-b));
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fff;
+  font-size: 1.3rem;
+  z-index: 999;
+  box-shadow: 0 4px 20px rgba(56,189,248,.4);
+  transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition), visibility var(--transition);
+  opacity: 0;
+  visibility: hidden;
+}
+#backToTop.visible {
+  opacity: 1;
+  visibility: visible;
+}
+#backToTop:hover {
+  transform: scale(1.12) translateY(-3px);
+  box-shadow: 0 6px 28px rgba(56,189,248,.65);
+}
+
 /* ─── DARK MODE TOGGLE ───────────────────────────────────────────── */
 #darkModeToggle {
   position: fixed;
@@ -226,10 +257,13 @@ body {
   overflow-x: auto;
   margin-bottom: 30px;
   padding-bottom: 10px;
+  cursor: grab;
+  user-select: none;
   /* hide scrollbar but keep scroll */
   scrollbar-width: none;
 }
 .filter-buttons::-webkit-scrollbar { display: none; }
+.filter-buttons.dragging { cursor: grabbing; }
 
 .filter-buttons ul {
   display: flex;
@@ -270,9 +304,22 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+  grid-auto-rows: auto;
+  align-items: start;
 }
 @media (min-width: 640px)  { .portfolio-gallery { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1024px) { .portfolio-gallery { grid-template-columns: repeat(4, 1fr); } }
+
+/* Card horizontal (vídeo paisagem 16:9) — ocupa 2 colunas */
+.item-h {
+  grid-column: span 2;
+}
+.item-h .video-thumb {
+  height: 260px;
+}
+@media (max-width: 600px) {
+  .item-h .video-thumb { height: 180px; }
+}
 
 /* ─── CARD ───────────────────────────────────────────────────────── */
 .item {
@@ -316,9 +363,8 @@ body {
   object-fit: cover;
   display: block;
   background: #0a1628;
-  /* começa invisível; JS define opacity:1 quando o frame estiver pronto */
-  opacity: 0;
-  transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .4s ease;
+  pointer-events: none;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
 }
 .item:hover .video-thumb { transform: scale(1.08); }
 
@@ -793,6 +839,9 @@ footer {
 <!-- ═══ DARK MODE TOGGLE ══════════════════════════════════════════ -->
 <button id="darkModeToggle" title="Alternar tema">🌙</button>
 
+<!-- ═══ BACK TO TOP ═══════════════════════════════════════════════ -->
+<button id="backToTop" title="Voltar ao topo" aria-label="Voltar ao topo">&#8679;</button>
+
 <!-- ═══ PORTFOLIO ═════════════════════════════════════════════════ -->
 <section class="portfolio">
 <div class="container">
@@ -956,7 +1005,7 @@ footer {
       <div class="item-overlay"><span>Tarcísio &amp; Lorraine</span></div>
     </div>
 
-    <div class="item" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/22TL.mp4">
+    <div class="item item-h" data-type="video" data-id="Tarcísio e Lorraine" data-src="portfolio/22TL.mp4">
       <img class="video-thumb" src="" alt="Tarcísio e Lorraine" data-video="portfolio/22TL.mp4">
       <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <span class="item-badge">🎬 Vídeo</span>
@@ -1060,6 +1109,12 @@ footer {
       <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
     </div>
 
+    <div class="item" data-type="img" data-id="Roberto e Lara" data-src="portfolio/371RL.jpeg">
+      <img src="portfolio/371RL.jpeg" alt="Roberto e Lara">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Roberto &amp; Lara</span></div>
+    </div>
+
     <div class="item" data-type="img" data-id="Jailson e Valéria" data-src="portfolio/38JV.jpeg">
       <img src="portfolio/38JV.jpeg" alt="Jailson e Valéria">
       <span class="item-badge">📷 Foto</span>
@@ -1107,6 +1162,91 @@ footer {
       <img src="portfolio/45BD.jpeg" alt="Bruno e Débora">
       <span class="item-badge">📷 Foto</span>
       <div class="item-overlay"><span>Bruno &amp; Débora</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/46DM.jpeg">
+      <img src="portfolio/46DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/47DM.jpeg">
+      <img src="portfolio/47DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/48DM.jpeg">
+      <img src="portfolio/48DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/49DM.jpeg">
+      <img src="portfolio/49DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/50DM.jpeg">
+      <img src="portfolio/50DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="video" data-id="Davi e Miriã" data-src="portfolio/51DM.mp4">
+      <img class="video-thumb" src="" alt="Davi e Miriã" data-video="portfolio/51DM.mp4">
+      <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <span class="item-badge">🎬 Vídeo</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/52DM.jpeg">
+      <img src="portfolio/52DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/53DM.jpeg">
+      <img src="portfolio/53DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/54DM.jpeg">
+      <img src="portfolio/54DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/55DM.jpeg">
+      <img src="portfolio/55DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/56DM.jpeg">
+      <img src="portfolio/56DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/57DM.jpeg">
+      <img src="portfolio/57DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+    
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/58DM.jpeg">
+      <img src="portfolio/58DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
+    </div>
+
+    <div class="item" data-type="img" data-id="Davi e Miriã" data-src="portfolio/59DM.jpeg">
+      <img src="portfolio/59DM.jpeg" alt="Davi e Miriã">
+      <span class="item-badge">📷 Foto</span>
+      <div class="item-overlay"><span>Davi &amp; Miriã</span></div>
     </div>
 
   </div><!-- /gallery -->
@@ -1280,10 +1420,22 @@ footer {
   /* ── Abre modal ao clicar num card ───────────────────────────── */
   gallery.forEach(function (el) {
     el.addEventListener('click', function () {
-      var cat = el.dataset.id;
-      filtered = Array.from(gallery).filter(function (i) {
-        return i.offsetParent !== null && i.dataset.id === cat;
-      });
+      var activeBtn    = document.querySelector('#filter-btns li.active');
+      var activeTarget = activeBtn ? activeBtn.dataset.target : 'all';
+
+      if (activeTarget === 'all') {
+        /* "Todos" ativo → navega por todos os itens visíveis */
+        filtered = Array.from(gallery).filter(function (i) {
+          return i.offsetParent !== null;
+        });
+      } else {
+        /* Casal específico → navega só pelos itens daquele casal */
+        var cat = el.dataset.id;
+        filtered = Array.from(gallery).filter(function (i) {
+          return i.offsetParent !== null && i.dataset.id === cat;
+        });
+      }
+
       currentIdx = filtered.indexOf(el);
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -1351,12 +1503,55 @@ document.querySelectorAll('#filter-btns li').forEach(btn => {
   });
 });
 
+/* ── Filter scroll lateral (desktop) ──────────────────────────── */
+(function () {
+  var wrap = document.querySelector('.filter-buttons');
+  var startX, scrollLeft, dragging = false;
+
+  /* Roda do mouse → rola horizontalmente */
+  wrap.addEventListener('wheel', function (e) {
+    if (e.deltaY === 0) return;
+    e.preventDefault();
+    wrap.scrollLeft += e.deltaY;
+  }, { passive: false });
+
+  /* Click + arrasto → rola horizontalmente */
+  wrap.addEventListener('mousedown', function (e) {
+    dragging  = true;
+    startX    = e.pageX - wrap.offsetLeft;
+    scrollLeft = wrap.scrollLeft;
+    wrap.classList.add('dragging');
+  });
+  document.addEventListener('mouseup', function () {
+    dragging = false;
+    wrap.classList.remove('dragging');
+  });
+  document.addEventListener('mousemove', function (e) {
+    if (!dragging) return;
+    e.preventDefault();
+    var x    = e.pageX - wrap.offsetLeft;
+    var walk = (x - startX) * 1.5;
+    wrap.scrollLeft = scrollLeft - walk;
+  });
+})();
+
 /* ── Dark / Light toggle ───────────────────────────────────────── */
 const toggle = document.getElementById('darkModeToggle');
 toggle.addEventListener('click', () => {
   document.body.classList.toggle('light');
   toggle.textContent = document.body.classList.contains('light') ? '🌑' : '🌙';
 });
+
+/* ── Back to top ───────────────────────────────────────────────── */
+(function () {
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
 
 /* ── Hero Carousel ─────────────────────────────────────────────── */
 (function () {
@@ -1404,128 +1599,27 @@ toggle.addEventListener('click', () => {
 
 /* ── Thumbnails dos cards de vídeo ─────────────────────────────── */
 /*
- * Estratégia em 2 camadas:
- * 1. Captura o 1º frame via <video> + Canvas → imagem real do vídeo
- * 2. Se o browser bloquear (iOS segurança / codec), mostra um
- *    gradiente bonito com ícone de play — nunca fica tela preta
- *
- * Os vídeos são carregados em fila (1 por vez) para não travar a rede.
+ * Substitui cada <img class="video-thumb"> por um <video> real com
+ * src#t=0.5 — o Chrome exibe nativamente o frame daquele segundo,
+ * sem precisar de canvas nem captura manual de frame.
  */
 (function () {
-  var thumbs = Array.from(document.querySelectorAll('.video-thumb'));
-  if (!thumbs.length) return;
+  document.querySelectorAll('img.video-thumb').forEach(function (imgEl) {
+    var src = imgEl.dataset.video;
+    if (!src) return;
 
-  /* Gradiente de fallback: fundo escuro degradê com tom azul */
-  function makeFallback(imgEl) {
-    var canvas  = document.createElement('canvas');
-    canvas.width  = 320;
-    canvas.height = 185;
-    var ctx = canvas.getContext('2d');
-    /* gradiente diagonal escuro → azul petróleo */
-    var g = ctx.createLinearGradient(0, 0, 320, 185);
-    g.addColorStop(0,   '#0d1526');
-    g.addColorStop(0.5, '#0f2540');
-    g.addColorStop(1,   '#091a34');
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, 320, 185);
-    /* ícone de play desenhado no canvas */
-    ctx.beginPath();
-    ctx.arc(160, 92, 34, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255,255,255,0.12)';
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(150, 74);
-    ctx.lineTo(150, 110);
-    ctx.lineTo(180, 92);
-    ctx.closePath();
-    ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    ctx.fill();
-    imgEl.src = canvas.toDataURL('image/jpeg', 0.7);
-    imgEl.style.opacity = '1';
-  }
-
-  /* Captura o primeiro frame real do vídeo */
-  function captureFrame(imgEl, src, done) {
-    var v    = document.createElement('video');
-    var done = done || function(){};
-    var fired = false;
-
-    function finish(ok) {
-      if (fired) return;
-      fired = true;
-      v.pause();
-      v.removeAttribute('src');
-      try { v.load(); } catch(e) {}
-      done(ok);
-    }
-
-    v.muted        = true;
-    v.preload      = 'metadata';
-    v.playsInline  = true;
+    var v = document.createElement('video');
+    v.className        = imgEl.className;
+    v.muted            = true;
+    v.setAttribute('muted', '');
+    v.playsInline      = true;
     v.setAttribute('playsinline', '');
+    v.setAttribute('webkit-playsinline', '');
+    v.preload          = 'metadata';
+    v.src              = src + '#t=0.5';
 
-    /* #t=0.5 força o browser a saltar para 0.5s → frame visível */
-    v.src = src + '#t=0.5';
-
-    v.addEventListener('seeked', function () {
-      try {
-        var c  = document.createElement('canvas');
-        c.width  = v.videoWidth  || 320;
-        c.height = v.videoHeight || 185;
-        c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
-        var dataUrl = c.toDataURL('image/jpeg', 0.82);
-        imgEl.src = dataUrl;
-        imgEl.style.opacity = '1';
-        finish(true);
-      } catch (err) {
-        /* canvas taint / codec não suportado */
-        makeFallback(imgEl);
-        finish(false);
-      }
-    });
-
-    v.addEventListener('error', function () {
-      makeFallback(imgEl);
-      finish(false);
-    });
-
-    /* Timeout de segurança: 6s sem resposta → fallback */
-    var guard = setTimeout(function () {
-      makeFallback(imgEl);
-      finish(false);
-    }, 6000);
-
-    v.addEventListener('seeked',  function () { clearTimeout(guard); }, { once: true });
-    v.addEventListener('error',   function () { clearTimeout(guard); }, { once: true });
-
-    v.load();
-  }
-
-  /* Processa em fila, 1 vídeo por vez, para não sobrecarregar mobile */
-  var queue = thumbs.slice();
-
-  function processNext() {
-    if (!queue.length) return;
-    var imgEl = queue.shift();
-    var src   = imgEl.dataset.video;
-    if (!src) { processNext(); return; }
-
-    /* Mostra fallback imediatamente (nunca fica preto) */
-    makeFallback(imgEl);
-
-    /* Tenta capturar o frame real em background */
-    captureFrame(imgEl, src, function () {
-      /* pequena pausa entre capturas para não travar CPU mobile */
-      setTimeout(processNext, 80);
-    });
-  }
-
-  /* Começa após a página carregar */
-  if (document.readyState === 'complete') {
-    processNext();
-  } else {
-    window.addEventListener('load', processNext);
-  }
+    imgEl.parentNode.replaceChild(v, imgEl);
+  });
 })();
 </script>
 
